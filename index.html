@@ -1,0 +1,288 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mujka Gram Bazaar | Prince Barman</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #fffaf0;
+      color: #263322;
+    }
+    header {
+      background: #176b3a;
+      color: white;
+      padding: 22px 15px;
+      text-align: center;
+    }
+    header h1 { margin: 0 0 8px; }
+    nav {
+      background: #104b2a;
+      padding: 13px;
+      text-align: center;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 10px;
+      display: inline-block;
+      padding: 5px 0;
+    }
+    .hero {
+      text-align: center;
+      padding: 45px 15px;
+      background: #f4d99b;
+    }
+    .hero h2 { font-size: 30px; margin: 0 0 12px; }
+    .search {
+      display: block;
+      width: min(90%, 500px);
+      padding: 13px;
+      margin: 20px auto;
+      border: 1px solid #bbb;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    h2.section-title { text-align: center; margin-top: 30px; }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 18px;
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 3px 12px #00000015;
+      padding-bottom: 15px;
+    }
+    .card img {
+      width: 100%;
+      height: 175px;
+      object-fit: cover;
+      background: #eee;
+    }
+    .card h3, .card p { margin: 12px; }
+    .price { color: #176b3a; font-weight: bold; }
+    .details {
+      margin: 12px;
+      color: #555;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    button {
+      background: #176b3a;
+      color: white;
+      border: none;
+      padding: 11px 15px;
+      margin: 5px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover { background: #104b2a; }
+    .about, .contact {
+      text-align: center;
+      padding: 25px 15px;
+      line-height: 1.8;
+    }
+    footer {
+      background: #104b2a;
+      color: white;
+      text-align: center;
+      padding: 18px;
+    }
+    #cart { font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🌾 Mujka Gram Bazaar</h1>
+  <p>Gaon ka apna bazaar — har zaroorat ek jagah!</p>
+  <p>Website by Prince Barman | Class 9th</p>
+</header>
+
+<nav>
+  <a href="#home">Home</a>
+  <a href="#products">Products</a>
+  <a href="#about">About</a>
+  <a href="#contact">Contact</a>
+  <a href="#cart">🛒 Cart: <span id="count">0</span></a>
+</nav>
+
+<section class="hero" id="home">
+  <h2>Welcome to Mujka Gram Bazaar</h2>
+  <p>Rice, Wheat, Furniture, Diya, Lights aur bahut kuch!</p>
+  <input class="search" id="search"
+    placeholder="🔍 Product search karo..."
+    oninput="showProducts()">
+  <p id="cart">Total Items: <span id="count2">0</span></p>
+</section>
+
+<h2 class="section-title" id="products">🛍️ Hamare Products</h2>
+<div class="products" id="productList"></div>
+
+<section class="about" id="about">
+  <h2>Hamare Baare Mein</h2>
+  <p>Mujka Gram Bazaar ek school project hai,
+    jise Prince Barman, Class 9th ne banaya hai.</p>
+  <p>Yahan gaon ki rozmarra ki zarooraton ke
+    products ek hi website par dikhaye gaye hain.</p>
+</section>
+
+<section class="contact" id="contact">
+  <h2>Contact Us</h2>
+  <p>Owner: Prince Barman</p>
+  <p>Shop: Mujka Gram Bazaar</p>
+  <p>Phone: Apna mobile number yahan likho</p>
+</section>
+
+<footer>
+  <p>© 2026 Mujka Gram Bazaar</p>
+  <p>Made with ❤️ by Prince Barman | Class 9th</p>
+</footer>
+
+<script>
+const products = [
+  {
+    name: "Rice (Chawal)", category: "Grocery",
+    price: 50, unit: "per kg",
+    img: "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=600&q=80",
+    desc: "Achhe quality ke chawal. Ghar ke daily khane ke liye.",
+    extra: "Available pack: 1 kg, 5 kg, 10 kg"
+  },
+  {
+    name: "Wheat (Gehu)", category: "Grocery",
+    price: 35, unit: "per kg",
+    img: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=600&q=80",
+    desc: "Gehu roti aur aata banane ke liye.",
+    extra: "Available pack: 1 kg, 5 kg, 25 kg"
+  },
+  {
+    name: "Furniture", category: "Home",
+    price: 1500, unit: "starting price",
+    img: "https://images.unsplash.com/photo- furniture",
+    desc: "Ghar ke liye table, chair aur anya furniture.",
+    extra: "Alag design aur size ke liye price check karein."
+  },
+  {
+    name: "Ghar ka Samaan", category: "Home",
+    price: 100, unit: "starting price",
+    img: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=600&q=80",
+    desc: "Ghar ko sundar aur aaramdayak banane ka samaan.",
+    extra: "Price product aur size ke hisaab se badlega."
+  },
+  {
+    name: "Small Trees (Paudhe)", category: "Garden",
+    price: 40, unit: "per plant",
+    img: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=600&q=80",
+    desc: "Ghar, aangan aur garden ke liye chhote paudhe.",
+    extra: "Plant type ke hisaab se price alag hoga."
+  },
+  {
+    name: "Joylite / LED Light", category: "Lights",
+    price: 120, unit: "starting price",
+    img: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=600&q=80",
+    desc: "Ghar aur dukaan ke liye decorative lights.",
+    extra: "Watt aur model ke hisaab se price alag."
+  },
+  {
+    name: "Diwali Lights", category: "Festival",
+    price: 150, unit: "per set",
+    img: "https://images.unsplash.com/photo-1512389142860-9c449e58a543?auto=format&fit=crop&w=600&q=80",
+    desc: "Diwali decoration ke liye colourful lights.",
+    extra: "String light aur decoration options."
+  },
+  {
+    name: "Mitti ka Diya", category: "Festival",
+    price: 10, unit: "per piece",
+    img: "https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&w=600&q=80",
+    desc: "Paramparik mitti ke diye, pooja aur Diwali ke liye.",
+    extra: "Single piece ya bulk order."
+  },
+  {
+    name: "DJ Speaker", category: "Sound",
+    price: 5000, unit: "starting price",
+    img: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=600&q=80",
+    desc: "Party, shaadi aur event ke liye sound system.",
+    extra: "Model aur power ke hisaab se price badlega."
+  },
+  {
+    name: "Gara / Ghar Decoration", category: "Home",
+    price: 100, unit: "starting price",
+    img: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=600&q=80",
+    desc: "Ghar ki sajawat ke liye decorative items.",
+    extra: "Design ke hisaab se price alag hoga."
+  }
+];
+
+let cart = 0;
+
+function showProducts() {
+  const query = document.getElementById("search").value.toLowerCase();
+  const list = document.getElementById("productList");
+
+  const filtered = products.filter(p =>
+    (p.name + " " + p.category + " " + p.desc)
+      .toLowerCase().includes(query)
+  );
+
+  list.innerHTML = "";
+
+  if (filtered.length === 0) {
+    list.innerHTML = "<p>Koi product nahi mila.</p>";
+    return;
+  }
+
+  filtered.forEach((p) => {
+    const card = document.createElement("article");
+    card.className = "card";
+
+    const img = document.createElement("img");
+    img.src = p.img;
+    img.alt = p.name;
+    img.loading = "lazy";
+    img.onerror = () => {
+      img.alt = "Photo available nahi hai: " + p.name;
+    };
+
+    const title = document.createElement("h3");
+    title.textContent = p.name;
+
+    const price = document.createElement("p");
+    price.className = "price";
+    price.textContent = "₹" + p.price + " " + p.unit;
+
+    const details = document.createElement("div");
+    details.className = "details";
+    details.textContent = p.desc + " " + p.extra;
+
+    const category = document.createElement("p");
+    category.textContent = "Category: " + p.category;
+
+    const btn = document.createElement("button");
+    btn.textContent = "Add to Cart 🛒";
+    btn.onclick = () => {
+      cart++;
+      document.getElementById("count").textContent = cart;
+      document.getElementById("count2").textContent = cart;
+      alert(p.name + " cart mein add ho gaya!");
+    };
+
+    card.append(img, title, price, details, category, btn);
+    list.appendChild(card);
+  });
+}
+
+showProducts();
+</script>
+
+</body>
+</html>
